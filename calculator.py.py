@@ -10,7 +10,7 @@ FONT_MAIN = ("Segoe UI", 22)
 FONT_BTN = ("Segoe UI", 12)
 FONT_HISTORY = ("Segoe UI", 10)
 
-# ----------------- GÜVENLİ HESAPLAMA -----------------
+# ----------------- OPERATÖRLER -----------------
 operators = {
     ast.Add: operator.add,
     ast.Sub: operator.sub,
@@ -18,26 +18,31 @@ operators = {
     ast.Div: operator.truediv
 }
 
+# ----------------- GÜVENLİ HESAPLAMA -----------------
 def safe_eval(expr):
     def eval_node(node):
         if isinstance(node, ast.Expression):
             return eval_node(node.body)
 
-        elif isinstance(node, ast.Num):  # sayı
-            return node.n
+        elif isinstance(node, ast.Constant):  # Python 3.10+
+            return node.value
 
-        elif isinstance(node, ast.BinOp):  # + - * /
+        elif isinstance(node, ast.BinOp):
+            if type(node.op) not in operators:
+                raise Exception("Geçersiz işlem")
             return operators[type(node.op)](
                 eval_node(node.left),
                 eval_node(node.right)
             )
 
-        elif isinstance(node, ast.UnaryOp):  # negatif sayılar
+        elif isinstance(node, ast.UnaryOp):
             if isinstance(node.op, ast.USub):
                 return -eval_node(node.operand)
+            else:
+                raise Exception("Geçersiz işlem")
 
         else:
-            raise Exception("Geçersiz işlem")
+            raise Exception("Geçersiz ifade")
 
     tree = ast.parse(expr, mode='eval')
     return eval_node(tree)
@@ -57,11 +62,17 @@ def backspace(event=None):
 def calculate(event=None):
     try:
         expr = entry.get()
+
+        if expr.strip() == "":
+            return
+
         result = safe_eval(expr)
+
         history.append(f"{expr} = {result}")
         entry.delete(0, tk.END)
         entry.insert(0, str(result))
         update_history()
+
     except:
         entry.delete(0, tk.END)
         entry.insert(0, "Hata")
@@ -118,6 +129,12 @@ root = tk.Tk()
 root.title("CalcPro")
 root.geometry("350x550")
 root.config(bg="#f0f0f0")
+
+# İKON (aynı klasörde ikon.ico olmalı)
+try:
+    root.iconbitmap("ikon.ico")
+except:
+    pass
 
 # ----------------- EKRAN -----------------
 entry = tk.Entry(root, font=FONT_MAIN, justify="right", bd=0)
