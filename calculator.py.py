@@ -2,7 +2,7 @@ import tkinter as tk
 import ast
 import operator
 
-# ----------------- GLOBAL -----------------
+# ----------------- Global -----------------
 history = []
 dark_mode = False
 all_buttons = []
@@ -11,7 +11,7 @@ FONT_MAIN = ("Segoe UI", 22)
 FONT_BTN = ("Segoe UI", 12)
 FONT_HISTORY = ("Segoe UI", 10)
 
-# ----------------- OPERATÖRLER -----------------
+# ----------------- Operators -----------------
 operators = {
     ast.Add: operator.add,
     ast.Sub: operator.sub,
@@ -20,8 +20,12 @@ operators = {
     ast.Pow: operator.pow
 }
 
-# ----------------- GÜVENLİ HESAPLAMA -----------------
+# ----------------- Secure Calculation -----------------
 def safe_eval(expr):
+    """
+    İfadeyi güvenli şekilde değerlendirir.
+    Sadece matematiksel işlemleri çalıştırır, zararlı kod çalışmaz.
+    
     def eval_node(node):
         if isinstance(node, ast.Expression):
             return eval_node(node.body)
@@ -52,7 +56,7 @@ def safe_eval(expr):
     tree = ast.parse(expr, mode='eval')
     return eval_node(tree)
 
-# ----------------- FONKSİYONLAR -----------------
+# ----------------- Functions -----------------
 def on_click(value):
     if value == "√":
         entry.insert(tk.END, "**0.5")
@@ -102,7 +106,7 @@ def update_history():
     for item in history[-10:]:
         history_box.insert(tk.END, item)
 
-# ----------------- TEMA -----------------
+# ----------------- Theme -----------------
 # Light tema
 def set_light_theme():
     global dark_mode
@@ -153,7 +157,7 @@ def toggle_settings():
     else:
         settings_frame.grid(row=2, column=0, columnspan=4, sticky="we")
 
-# ----------------- HOVER -----------------
+# ----------------- Hover -----------------
 def on_enter(e):
     if dark_mode:
         e.widget.config(bg="#444")
@@ -166,7 +170,7 @@ def on_leave(e):
     else:
         e.widget.config(bg="#ffffff")
 
-# ----------------- PENCERE -----------------
+# ----------------- Windows -----------------
 root = tk.Tk()
 root.title("CalcPro")
 root.geometry("350x550")
@@ -180,16 +184,16 @@ try:
 except:
     pass
 
-# ----------------- EKRAN -----------------
+# ----------------- Screen -----------------
 entry = tk.Entry(root, font=FONT_MAIN, justify="right", bd=0)
 entry.grid(row=0, column=0, columnspan=4, padx=10, pady=15, sticky="we")
 
-# ----------------- KLAVYE -----------------
+# ----------------- Keyboard -----------------
 root.bind("<Return>", calculate)
 root.bind("<Escape>", clear_all)
 root.bind("<BackSpace>", backspace)
 
-# ----------------- BUTON -----------------
+# ----------------- Button -----------------
 def create_round_button(text, command, r, c):
     canvas = tk.Canvas(
         buttons_frame,
@@ -246,13 +250,13 @@ def create_round_button(text, command, r, c):
 
     all_buttons.append((canvas, circle, color))
 
-# ----------------- ÜST -----------------
+# ----------------- Top -----------------
 create_round_button("⚙", toggle_settings, 1, 0)
 create_round_button("⌫", backspace, 1, 1)
 create_round_button("C", clear_all, 1, 2)
 create_round_button("=", calculate, 1, 3)
 
-# ----------------- SETTINGS -----------------
+# ----------------- Settings -----------------
 settings_frame = tk.Frame(root, bg="#f0f0f0")
 
 tk.Button(settings_frame, text="White Theme",
@@ -266,7 +270,7 @@ tk.Label(settings_frame, text="Creator: Burak Akbilek",
 
 settings_frame.grid(row=2, column=0, columnspan=4, sticky="we")
 
-# ----------------- TUŞLAR -----------------
+# ----------------- Buttons -----------------
 buttons = [
     "7", "8", "9", "/",
     "4", "5", "6", "*",
@@ -284,11 +288,11 @@ for b in buttons:
         col = 0
         row += 1
 
-# ----------------- GEÇMİŞ -----------------
+# ----------------- Past -----------------
 history_box = tk.Listbox(root, height=8,
                          font=FONT_HISTORY, bd=0)
 history_box.grid(row=8, column=0, columnspan=4,
                  sticky="we", padx=10, pady=10)
 
-# ----------------- BAŞLAT -----------------
+# ----------------- Start -----------------
 root.mainloop()
