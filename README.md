@@ -81,7 +81,7 @@ Intuitive color system for operators
 
 ## Preview
 
-![Calculator Preview](assets/calculator-interface.png)   
+![Calculator Preview](calculator-interface.png)
 
 ----------------------
 
