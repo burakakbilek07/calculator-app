@@ -5,7 +5,7 @@
 ✅ Keyboard Shortcuts (Enter, Escape, Backspace)
 ✅ Smooth Hover & Click Animations
 ✅ Modern UI (Tkinter Canvas)
-✅ Secure calculation (AST-based (no malicious code will run)
+✅ Secure calculation AST-based (no malicious code will run)
 🔒 Secure calculation system (safe_eval & AST)
 → Prevents execution of malicious Python code
 
