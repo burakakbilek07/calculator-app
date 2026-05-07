@@ -28,16 +28,13 @@ Escape → Clear
 
 ----------------------
 
-📋 Supported Operations
+🔒 Security
 
-- ➕ Addition
-- ➖ Subtraction
-- ✖️ Multiplication
-- ➗ Division
-- √ Square root
-- % Percentage calculations
-🧹 Backspace (⌫)
-🧨 Clear (C)
+This project uses a custom safe_eval function instead of Python’s built-in eval
+Built on AST 
+Only mathematical operations are allowed
+Prevents execution of arbitrary or harmful code
+📋 Supported Operations
 
 ----------------------
 
@@ -52,12 +49,16 @@ pytest test_calculator.py
 
 ----------------------
 
-🔒 Security
+📋 Supported Operations
 
-This project uses a custom safe_eval function instead of Python’s built-in eval
-Built on AST 
-Only mathematical operations are allowed
-Prevents execution of arbitrary or harmful code
+- ➕ Addition
+- ➖ Subtraction
+- ✖️ Multiplication
+- ➗ Division
+- √ Square root
+- % Percentage calculations
+🧹 Backspace (⌫)
+🧨 Clear (C)
 
 ----------------------
 
