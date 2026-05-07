@@ -79,6 +79,12 @@ Intuitive color system for operators
 
 ----------------------
 
+## Preview
+
+![Calculator Preview](assets/calculator interface.png)
+
+----------------------
+
 👨‍💻 Developer
 
 Burak Akbilek
