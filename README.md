@@ -9,20 +9,20 @@
 🔒 Secure calculation system (safe_eval & AST)
 → Prevents execution of malicious Python code
 
-🎨 Theme support
+- Theme support
 → Switch between Light & Dark mode via settings (⚙️)
 
-📜 Calculation history
+- Calculation history
 → View recent operations
 
-🎮 Interactive button animations
+- Interactive button animations
 → Click = bounce effect
 → Hover = scaling effect
 
-🎯 Color-coded operator buttons
+- Color-coded operator buttons
 → Improves usability and visual clarity
 
-⌨️ Keyboard Shortcuts
+- Keyboard Shortcuts
 Enter → Calculate
 Escape → Clear
 
@@ -34,11 +34,10 @@ This project uses a custom safe_eval function instead of Python’s built-in eva
 Built on AST 
 Only mathematical operations are allowed
 Prevents execution of arbitrary or harmful code
-📋 Supported Operations
 
 ----------------------
 
-🚀 Installation
+- Installation
 pip install -r requirements.txt
 python calculator.py
 
@@ -49,7 +48,7 @@ pytest test_calculator.py
 
 ----------------------
 
-📋 Supported Operations
+- Supported Operations
 
 - ➕ Addition
 - ➖ Subtraction
@@ -57,21 +56,21 @@ pytest test_calculator.py
 - ➗ Division
 - √ Square root
 - % Percentage calculations
-🧹 Backspace (⌫)
-🧨 Clear (C)
+- Backspace (⌫)
+- Clear (C)
 
 ----------------------
 
-🎨 Themes
+- Themes
 
-Access settings via ⚙️ button to switch between:
+Access settings via button to switch between:
 
 🌙 Dark Mode
 ☀️ Light Mode
 
 ----------------------
 
-🖥️ UI Design
+- UI Design
 Clean and modern layout
 Circular buttons using Tkinter Canvas
 Smooth hover and click animations
@@ -85,7 +84,7 @@ Intuitive color system for operators
 
 ----------------------
 
-👨‍💻 Developer
+- Developer
 
 Burak Akbilek
 
