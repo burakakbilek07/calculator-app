@@ -2,7 +2,6 @@ import tkinter as tk
 import ast
 import operator
 
-# ----------------- Global -----------------
 history = []
 dark_mode = False
 all_buttons = []
@@ -11,7 +10,6 @@ FONT_MAIN = ("Segoe UI", 22)
 FONT_BTN = ("Segoe UI", 12)
 FONT_HISTORY = ("Segoe UI", 10)
 
-# ----------------- Operators -----------------
 operators = {
     ast.Add: operator.add,
     ast.Sub: operator.sub,
@@ -20,12 +18,7 @@ operators = {
     ast.Pow: operator.pow
 }
 
-# ----------------- Secure Calculation -----------------
 def safe_eval(expr):
-    """
-    İfadeyi güvenli şekilde değerlendirir.
-    Sadece matematiksel işlemleri çalıştırır, zararlı kod çalışmaz.
-    
     def eval_node(node):
         if isinstance(node, ast.Expression):
             return eval_node(node.body)
@@ -34,11 +27,11 @@ def safe_eval(expr):
             if isinstance(node.value, (int, float)):
                 return node.value
             else:
-                raise Exception("Sadece sayılar izinli")
+                raise Exception("Only numbers are allowed")
 
         elif isinstance(node, ast.BinOp):
             if type(node.op) not in operators:
-                raise Exception("Geçersiz işlem")
+                raise Exception("Invalid operation")
             return operators[type(node.op)](
                 eval_node(node.left),
                 eval_node(node.right)
@@ -48,15 +41,14 @@ def safe_eval(expr):
             if isinstance(node.op, ast.USub):
                 return -eval_node(node.operand)
             else:
-                raise Exception("Geçersiz işlem")
+                raise Exception("Invalid operation")
 
         else:
-            raise Exception("Geçersiz ifade")
+            raise Exception("Invalid expression")
 
     tree = ast.parse(expr, mode='eval')
     return eval_node(tree)
 
-# ----------------- Functions -----------------
 def on_click(value):
     if value == "√":
         entry.insert(tk.END, "**0.5")
@@ -80,7 +72,7 @@ def calculate(event=None):
         expr = expr.replace("%", "/100")
 
         if len(expr) > 100:
-            raise Exception("Çok uzun işlem")
+            raise Exception("Expression too long")
 
         if expr.strip() == "":
             return
@@ -94,19 +86,17 @@ def calculate(event=None):
 
     except ZeroDivisionError:
         entry.delete(0, tk.END)
-        entry.insert(0, "0'a bölünmez")
+        entry.insert(0, "Cannot divide by 0")
 
     except Exception as e:
         entry.delete(0, tk.END)
-        entry.insert(0, "Hata")
-        print(e)
+        entry.insert(0, "Error")
 
 def update_history():
     history_box.delete(0, tk.END)
     for item in history[-10:]:
         history_box.insert(tk.END, item)
 
-# ----------------- Theme -----------------
 # Light tema
 def set_light_theme():
     global dark_mode
@@ -157,7 +147,6 @@ def toggle_settings():
     else:
         settings_frame.grid(row=2, column=0, columnspan=4, sticky="we")
 
-# ----------------- Hover -----------------
 def on_enter(e):
     if dark_mode:
         e.widget.config(bg="#444")
@@ -170,7 +159,6 @@ def on_leave(e):
     else:
         e.widget.config(bg="#ffffff")
 
-# ----------------- Windows -----------------
 root = tk.Tk()
 root.title("CalcPro")
 root.geometry("350x550")
@@ -184,16 +172,13 @@ try:
 except:
     pass
 
-# ----------------- Screen -----------------
 entry = tk.Entry(root, font=FONT_MAIN, justify="right", bd=0)
 entry.grid(row=0, column=0, columnspan=4, padx=10, pady=15, sticky="we")
 
-# ----------------- Keyboard -----------------
 root.bind("<Return>", calculate)
 root.bind("<Escape>", clear_all)
 root.bind("<BackSpace>", backspace)
 
-# ----------------- Button -----------------
 def create_round_button(text, command, r, c):
     canvas = tk.Canvas(
         buttons_frame,
@@ -206,20 +191,14 @@ def create_round_button(text, command, r, c):
 
     canvas.grid(row=r, column=c, padx=8, pady=8)
 
-    if text in ["+", "-", "*", "/"]:
-        color = "#ff9500"
-    elif text == "=":
-        color = "#34c759"
-    elif text in ["C", "⌫"]:
-        color = "#ff3b30"
-    elif text == "√":
-        color = "#5856d6"
-    elif text == "%":
-        color = "#007aff"
-    elif text == "⚙":
-        color = "#8e8e93"
+    if text in ["+", "-", "*", "/", "="]:
+        color = "#ff9f0a"
+
+    elif text in ["C", "⌫", "⚙", "%"]:
+        color = "#a5a5a5"
+
     else:
-        color = "#d4d4d2"
+        color = "#333333"
 
     circle = canvas.create_oval(5, 5, 65, 65, fill=color, outline="")
     canvas.create_text(35, 35, text=text, fill="white", font=("Segoe UI", 16, "bold"))
@@ -250,13 +229,11 @@ def create_round_button(text, command, r, c):
 
     all_buttons.append((canvas, circle, color))
 
-# ----------------- Top -----------------
 create_round_button("⚙", toggle_settings, 1, 0)
 create_round_button("⌫", backspace, 1, 1)
 create_round_button("C", clear_all, 1, 2)
 create_round_button("=", calculate, 1, 3)
 
-# ----------------- Settings -----------------
 settings_frame = tk.Frame(root, bg="#f0f0f0")
 
 tk.Button(settings_frame, text="White Theme",
@@ -270,7 +247,6 @@ tk.Label(settings_frame, text="Creator: Burak Akbilek",
 
 settings_frame.grid(row=2, column=0, columnspan=4, sticky="we")
 
-# ----------------- Buttons -----------------
 buttons = [
     "7", "8", "9", "/",
     "4", "5", "6", "*",
@@ -288,11 +264,9 @@ for b in buttons:
         col = 0
         row += 1
 
-# ----------------- Past -----------------
 history_box = tk.Listbox(root, height=8,
                          font=FONT_HISTORY, bd=0)
 history_box.grid(row=8, column=0, columnspan=4,
                  sticky="we", padx=10, pady=10)
 
-# ----------------- Start -----------------
 root.mainloop()
